@@ -1,6 +1,8 @@
 package org.example.parser;
 
-public record LiteralNumber(double number) implements Expr {
+import org.example.lexer.Token;
+
+public record LiteralNumber(double number, Token original) implements Expr {
     @Override
     public <T> T eval(Evaluator<T> evaluator) {
         return evaluator.evaluate(this);

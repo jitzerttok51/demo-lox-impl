@@ -3,16 +3,18 @@ package org.example.lexer;
 import java.util.List;
 import java.util.Optional;
 
+import static org.example.lexer.TokenType.*;
+
 public class DefaultLexer {
 
     public static Lexer lexer() {
         return new Lexer(List.of(
-            singleTokenFunction(TokenType.PLUS),
-            singleTokenFunction(TokenType.MINUS),
-            singleTokenFunction(TokenType.MULTIPLY),
-            singleTokenFunction(TokenType.BANG),
+            singleTokenFunction(PLUS),
+            singleTokenFunction(MINUS),
+            singleTokenFunction(MULTIPLY),
+            singleTokenFunction(BANG),
             DefaultLexer::singleLineComment,
-            singleTokenFunction(TokenType.DIVIDE),
+            singleTokenFunction(DIVIDE),
             DefaultLexer::numberFunction,
             DefaultLexer::identifierFunction,
             DefaultLexer::stringFunction
@@ -36,7 +38,7 @@ public class DefaultLexer {
             sb.append(stream.get());
             stream.advance();
         }
-        var result = new Token(TokenType.SINGLE_LINE_COMMENT, sb.toString(), position, line, column);
+        var result = new Token(SINGLE_LINE_COMMENT, sb.toString(), position, line, column);
         stream.advance();
         return Optional.of(result);
     }
@@ -68,7 +70,7 @@ public class DefaultLexer {
             }
             stream.advance();
         }
-        return Optional.of(new Token(TokenType.NUMBER, sb.toString(), position, line, column));
+        return Optional.of(new Token(NUMBER, sb.toString(), position, line, column));
     }
 
     private static Optional<Token> identifierFunction(CharacterStream stream) {
@@ -88,9 +90,9 @@ public class DefaultLexer {
         }
         var value = sb.toString();
         var type = switch (value) {
-            case "true" -> TokenType.TRUE;
-            case "false" -> TokenType.FALSE;
-            case "nil" -> TokenType.NULL;
+            case "true" -> TRUE;
+            case "false" -> FALSE;
+            case "nil" -> NULL;
             default -> TokenType.IDENTIFIER;
         };
         return Optional.of(new Token(type, value, position, line, column));
@@ -148,6 +150,6 @@ public class DefaultLexer {
 
 
         }
-        return Optional.of(new Token(TokenType.STRING, sb.toString(), position, line, column));
+        return Optional.of(new Token(STRING, sb.toString(), position, line, column));
     }
 }

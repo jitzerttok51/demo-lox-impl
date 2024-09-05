@@ -1,36 +1,11 @@
 package org.example.parser;
 
 import org.example.lexer.Token;
-import org.example.lexer.TokenType;
+import static org.example.lexer.TokenType.*;
 
 import java.util.List;
 
 public class Parser {
-
-    class TokenStream {
-        private final List<Token> tokens;
-        private int position = 0;
-
-        TokenStream(List<Token> tokens) {
-            this.tokens = tokens;
-        }
-
-        public int position() {
-            return position;
-        }
-
-        public int advance() {
-            return position++;
-        }
-
-        public boolean isEnd() {
-            return position == tokens.size();
-        }
-
-        public Token get() {
-            return tokens.get(position);
-        }
-    }
 
     public Expr parse(List<Token> tokens) {
         TokenStream stream = new TokenStream(tokens);
@@ -45,7 +20,7 @@ public class Parser {
         var left = mulDiv(stream);
         if(stream.isEnd()) return left;
         var token = stream.get();
-        if(!List.of(TokenType.PLUS, TokenType.MINUS).contains(token.type())) {
+        if(!List.of(PLUS, MINUS).contains(token.type())) {
             return left;
         }
         stream.advance();
@@ -56,7 +31,7 @@ public class Parser {
         var left = unary(stream);
         if(stream.isEnd()) return left;
         var token = stream.get();
-        if(!List.of(TokenType.MULTIPLY, TokenType.DIVIDE).contains(token.type())) {
+        if(!List.of(MULTIPLY, DIVIDE).contains(token.type())) {
             return left;
         }
         stream.advance();
@@ -65,7 +40,7 @@ public class Parser {
 
     private Expr unary(TokenStream stream) {
         var token = stream.get();
-        if(!List.of(TokenType.PLUS, TokenType.MINUS, TokenType.BANG).contains(token.type())) {
+        if(!List.of(PLUS, MINUS, BANG).contains(token.type())) {
             return literal(stream);
         }
         stream.advance();
@@ -76,9 +51,9 @@ public class Parser {
         var token = stream.get();
 
         var literal = switch (token.type()) {
-            case NUMBER -> new LiteralNumber(Double.parseDouble(token.text()));
-            case TRUE -> new LiteralBoolean(true);
-            case FALSE -> new LiteralBoolean(false);
+            case NUMBER -> new LiteralNumber(Double.parseDouble(token.text()), token);
+            case TRUE -> new LiteralBoolean(true, token);
+            case FALSE -> new LiteralBoolean(false, token);
             default -> throw new RuntimeException("Unrecognized token type: " + token.type());
         };
         stream.advance();
