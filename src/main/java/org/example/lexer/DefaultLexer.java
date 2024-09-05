@@ -10,6 +10,7 @@ public class DefaultLexer {
             singleTokenFunction(TokenType.PLUS),
             singleTokenFunction(TokenType.MINUS),
             singleTokenFunction(TokenType.MULTIPLY),
+            singleTokenFunction(TokenType.BANG),
             DefaultLexer::singleLineComment,
             singleTokenFunction(TokenType.DIVIDE),
             DefaultLexer::numberFunction,

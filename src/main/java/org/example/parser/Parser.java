@@ -65,11 +65,11 @@ public class Parser {
 
     private Expr unary(TokenStream stream) {
         var token = stream.get();
-        if(!List.of(TokenType.PLUS, TokenType.MINUS).contains(token.type())) {
+        if(!List.of(TokenType.PLUS, TokenType.MINUS, TokenType.BANG).contains(token.type())) {
             return literal(stream);
         }
         stream.advance();
-        return new Unary(token, literal(stream));
+        return new Unary(token, unary(stream));
     }
 
     private Expr literal(TokenStream stream) {

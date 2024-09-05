@@ -5,6 +5,7 @@ public enum TokenType {
     MINUS("-"),
     MULTIPLY("*"),
     DIVIDE("/"),
+    BANG("!"),
     SINGLE_LINE_COMMENT("//"),
     MULTI_LINE_COMMENT("/*"),
     NUMBER(""),

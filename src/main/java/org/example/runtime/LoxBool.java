@@ -12,12 +12,15 @@ public class LoxBool implements LoxObject {
 
     @Override
     public LoxObject callBinary(TokenType operation, LoxObject right) {
-        throw new RuntimeException("Not implemented");
+        throw new RuntimeException("Operation "+operation+"not supported on "+this.getClass().getSimpleName());
     }
 
     @Override
     public LoxObject callUnary(TokenType operation) {
-        throw new RuntimeException("Not implemented");
+        return switch (operation) {
+            case BANG -> new LoxBool(!value);
+            default -> throw new RuntimeException("Operation "+operation+"not supported on "+this.getClass().getSimpleName());
+        };
     }
 
     @Override
