@@ -10,7 +10,7 @@ public class Main {
     public static void main(String[] args) {
         Lexer lexer = DefaultLexer.lexer();
         var tokens = lexer.run("""
-            3 + 4.13 + 1 * 2
+            false
             """);
         Parser parser = new Parser();
         var expr = parser.parse(tokens);

@@ -85,7 +85,14 @@ public class DefaultLexer {
             sb.append(stream.get());
             stream.advance();
         }
-        return Optional.of(new Token(TokenType.IDENTIFIER, sb.toString(), position, line, column));
+        var value = sb.toString();
+        var type = switch (value) {
+            case "true" -> TokenType.TRUE;
+            case "false" -> TokenType.FALSE;
+            case "nil" -> TokenType.NULL;
+            default -> TokenType.IDENTIFIER;
+        };
+        return Optional.of(new Token(type, value, position, line, column));
     }
 
     private static Optional<Token> stringFunction(CharacterStream stream) {

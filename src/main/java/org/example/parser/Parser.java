@@ -74,11 +74,15 @@ public class Parser {
 
     private Expr literal(TokenStream stream) {
         var token = stream.get();
-        if(token.type() == TokenType.NUMBER) {
-            stream.advance();
-            return new LiteralNumber(Double.parseDouble(token.text()));
-        }
 
-        throw new RuntimeException("Unrecognized token type: " + token.type());
+        var literal = switch (token.type()) {
+            case NUMBER -> new LiteralNumber(Double.parseDouble(token.text()));
+            case TRUE -> new LiteralBoolean(true);
+            case FALSE -> new LiteralBoolean(false);
+            default -> throw new RuntimeException("Unrecognized token type: " + token.type());
+        };
+        stream.advance();
+
+        return literal;
     }
 }

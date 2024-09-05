@@ -9,6 +9,9 @@ public enum TokenType {
     MULTI_LINE_COMMENT("/*"),
     NUMBER(""),
     IDENTIFIER(""),
+    TRUE("true"),
+    FALSE("false"),
+    NULL("nil"),
     STRING("");
 
     private final String code;
