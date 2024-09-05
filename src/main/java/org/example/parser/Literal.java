@@ -1,0 +1,8 @@
+package org.example.interpreter;
+
+public record Literal(Object object) implements Expr {
+    @Override
+    public <T> T eval(Evaluator<T> evaluator) {
+        return null;
+    }
+}
