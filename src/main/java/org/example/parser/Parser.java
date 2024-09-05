@@ -1,9 +1,5 @@
-package org.example;
+package org.example.parser;
 
-import org.example.interpreter.Binary;
-import org.example.interpreter.Expr;
-import org.example.interpreter.LiteralNumber;
-import org.example.interpreter.Unary;
 import org.example.lexer.Token;
 import org.example.lexer.TokenType;
 

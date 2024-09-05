@@ -1,4 +1,4 @@
-package org.example.interpreter;
+package org.example.parser;
 
 public record Literal(Object object) implements Expr {
     @Override

@@ -1,4 +1,4 @@
-package org.example.interpreter;
+package org.example.parser;
 
 import org.example.lexer.Token;
 

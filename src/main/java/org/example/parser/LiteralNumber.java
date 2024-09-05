@@ -1,4 +1,4 @@
-package org.example.interpreter;
+package org.example.parser;
 
 public record LiteralNumber(double number) implements Expr {
     @Override
