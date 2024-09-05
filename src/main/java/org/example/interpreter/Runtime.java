@@ -30,13 +30,13 @@ public class Runtime implements Evaluator<LoxObject> {
     @Override
     public LoxObject evaluate(Unary number) {
         var obj = number.expr().eval(this);
-        return obj.callUnary(number.token().type());
+        return obj.callUnary(number.token());
     }
 
     @Override
     public LoxObject evaluate(Binary number) {
         var left = number.left().eval(this);
         var right = number.right().eval(this);
-        return left.callBinary(number.token().type(), right);
+        return left.callBinary(number.token(), right);
     }
 }

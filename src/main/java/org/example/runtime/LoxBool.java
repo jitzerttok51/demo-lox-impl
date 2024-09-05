@@ -1,5 +1,6 @@
 package org.example.runtime;
 
+import org.example.lexer.Token;
 import org.example.lexer.TokenType;
 
 public class LoxBool implements LoxObject {
@@ -11,15 +12,15 @@ public class LoxBool implements LoxObject {
     }
 
     @Override
-    public LoxObject callBinary(TokenType operation, LoxObject right) {
+    public LoxObject callBinary(Token operation, LoxObject right) {
         throw new RuntimeException("Operation "+operation+"not supported on "+this.getClass().getSimpleName());
     }
 
     @Override
-    public LoxObject callUnary(TokenType operation) {
-        return switch (operation) {
+    public LoxObject callUnary(Token operation) {
+        return switch (operation.type()) {
             case BANG -> new LoxBool(!value);
-            default -> throw new RuntimeException("Operation "+operation+"not supported on "+this.getClass().getSimpleName());
+            default -> throw new RuntimeException("Operation "+operation+" not supported on "+this.getClass().getSimpleName());
         };
     }
 

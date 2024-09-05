@@ -1,5 +1,6 @@
 package org.example.runtime;
 
+import org.example.lexer.Token;
 import org.example.lexer.TokenType;
 
 public class LoxNumber implements LoxObject {
@@ -11,9 +12,9 @@ public class LoxNumber implements LoxObject {
     }
 
     @Override
-    public LoxObject callBinary(TokenType operation, LoxObject right) {
+    public LoxObject callBinary(Token operation, LoxObject right) {
         if(right instanceof LoxNumber loxNumber) {
-            return switch (operation) {
+            return switch (operation.type()) {
                 case PLUS -> new LoxNumber(value + loxNumber.value);
                 case MINUS -> new LoxNumber(value - loxNumber.value);
                 case MULTIPLY -> new LoxNumber(value * loxNumber.value);
@@ -25,8 +26,8 @@ public class LoxNumber implements LoxObject {
     }
 
     @Override
-    public LoxObject callUnary(TokenType operation) {
-        return switch (operation) {
+    public LoxObject callUnary(Token operation) {
+        return switch (operation.type()) {
             case PLUS -> new LoxNumber(+value);
             case MINUS -> new LoxNumber(-value);
             default -> throw new RuntimeException();
