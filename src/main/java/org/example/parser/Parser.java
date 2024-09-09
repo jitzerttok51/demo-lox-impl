@@ -93,6 +93,16 @@ public class Parser {
 
     private Expr literal(TokenStream stream) {
         var token = stream.get();
+        if(token.type() == OPEN_BRACE) {
+            stream.advance();
+            var expr = expr(stream);
+            token = stream.get();
+            if(stream.isEnd() || token.type() != CLOSE_BRACE) {
+                throw new RuntimeException();
+            }
+            stream.advance();
+            return expr;
+        }
 
         var literal = switch (token.type()) {
             case NUMBER -> new LiteralNumber(Double.parseDouble(token.text()), token);

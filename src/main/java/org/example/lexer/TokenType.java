@@ -14,6 +14,8 @@ public enum TokenType {
     BANG("!"),
     AND("&&"),
     OR("||"),
+    OPEN_BRACE("("),
+    CLOSE_BRACE(")"),
     SINGLE_LINE_COMMENT("//"),
     MULTI_LINE_COMMENT("/*"),
     NUMBER(""),
