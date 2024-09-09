@@ -19,6 +19,12 @@ public class LoxNumber implements LoxObject {
                 case MINUS -> new LoxNumber(value - loxNumber.value);
                 case MULTIPLY -> new LoxNumber(value * loxNumber.value);
                 case DIVIDE -> new LoxNumber(value / loxNumber.value);
+                case GREATER_EQUAL -> new LoxBool(value >= loxNumber.value);
+                case LESS_EQUAL -> new LoxBool(value <= loxNumber.value);
+                case LESS_THAN -> new LoxBool(value < loxNumber.value);
+                case GREATER_THAN -> new LoxBool(value > loxNumber.value);
+                case EQUAL_EQUAL -> new LoxBool(value == loxNumber.value);
+                case BANG_EQUAL -> new LoxBool(value != loxNumber.value);
                 default -> throw new RuntimeException();
             };
         }

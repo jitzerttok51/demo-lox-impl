@@ -9,6 +9,12 @@ public class DefaultLexer {
 
     public static Lexer lexer() {
         return new Lexer(List.of(
+            doubleTokenFunction(EQUAL_EQUAL),
+            doubleTokenFunction(BANG_EQUAL),
+            doubleTokenFunction(GREATER_EQUAL),
+            doubleTokenFunction(LESS_EQUAL),
+            singleTokenFunction(LESS_THAN),
+            singleTokenFunction(GREATER_THAN),
             singleTokenFunction(PLUS),
             singleTokenFunction(MINUS),
             singleTokenFunction(MULTIPLY),
@@ -46,6 +52,21 @@ public class DefaultLexer {
     private static LexerFunction singleTokenFunction(TokenType tokenType) {
         return stream -> {
             if(stream.get() != tokenType.getCode().charAt(0)) {
+                return Optional.empty();
+            }
+            var result = new Token(tokenType, tokenType.getCode(), stream.position(), stream.line(), stream.column());
+            stream.advance();
+            return Optional.of(result);
+        };
+    }
+
+    private static LexerFunction doubleTokenFunction(TokenType tokenType) {
+        return stream -> {
+            if(stream.get() != tokenType.getCode().charAt(0)) {
+                return Optional.empty();
+            }
+            stream.advance();
+            if(stream.get() != tokenType.getCode().charAt(1)) {
                 return Optional.empty();
             }
             var result = new Token(tokenType, tokenType.getCode(), stream.position(), stream.line(), stream.column());

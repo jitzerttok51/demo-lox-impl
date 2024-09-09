@@ -13,6 +13,13 @@ public class LoxBool implements LoxObject {
 
     @Override
     public LoxObject callBinary(Token operation, LoxObject right) {
+        if(right instanceof LoxBool loxBool) {
+            return switch (operation.type()) {
+                case EQUAL_EQUAL -> new LoxBool(value == loxBool.value);
+                case BANG_EQUAL -> new LoxBool(value != loxBool.value);
+                default -> throw new RuntimeException();
+            };
+        }
         throw new RuntimeException("Operation "+operation+"not supported on "+this.getClass().getSimpleName());
     }
 

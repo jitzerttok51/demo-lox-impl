@@ -13,7 +13,29 @@ public class Parser {
     }
 
     private Expr expr(TokenStream stream) {
-        return addSub(stream);
+        return equality(stream);
+    }
+
+    private Expr equality(TokenStream stream) {
+        var left = comparison(stream);
+        if(stream.isEnd()) return left;
+        var token = stream.get();
+        if(!List.of(EQUAL_EQUAL, BANG_EQUAL).contains(token.type())) {
+            return left;
+        }
+        stream.advance();
+        return new Binary(token, left, equality(stream));
+    }
+
+    private Expr comparison(TokenStream stream) {
+        var left = addSub(stream);
+        if(stream.isEnd()) return left;
+        var token = stream.get();
+        if(!List.of(GREATER_EQUAL, LESS_EQUAL, GREATER_THAN, LESS_THAN).contains(token.type())) {
+            return left;
+        }
+        stream.advance();
+        return new Binary(token, left, comparison(stream));
     }
 
     private Expr addSub(TokenStream stream) {
@@ -24,7 +46,7 @@ public class Parser {
             return left;
         }
         stream.advance();
-        return new Binary(token, left, expr(stream));
+        return new Binary(token, left, addSub(stream));
     }
 
     private Expr mulDiv(TokenStream stream) {
@@ -35,7 +57,7 @@ public class Parser {
             return left;
         }
         stream.advance();
-        return new Binary(token, left, unary(stream));
+        return new Binary(token, left, mulDiv(stream));
     }
 
     private Expr unary(TokenStream stream) {
