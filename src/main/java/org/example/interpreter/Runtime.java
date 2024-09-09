@@ -10,18 +10,18 @@ import org.example.parser.LiteralNumber;
 import org.example.parser.PrintStatement;
 import org.example.parser.Statement;
 import org.example.parser.Unary;
+import org.example.parser.VarStatement;
 import org.example.runtime.LoxBool;
 import org.example.runtime.LoxNumber;
 import org.example.runtime.LoxObject;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Runtime implements Evaluator<LoxObject> {
 
-    private Map<String, LoxObject> scope = Map.of(
-        "first", new LoxNumber(5)
-    );
+    private final Map<String, LoxObject> scope = new HashMap<>();
 
     @Override
     public void run(List<Statement> statements) {
@@ -76,5 +76,13 @@ public class Runtime implements Evaluator<LoxObject> {
     @Override
     public void execute(ExpressionStatement statement) {
         statement.expr().eval(this);
+    }
+
+    @Override
+    public void execute(VarStatement statement) {
+        if(scope.containsKey(statement.name())) {
+            throw new RuntimeException("Cannot re-declare variable");
+        }
+        scope.put(statement.name(), statement.expr().eval(this));
     }
 }

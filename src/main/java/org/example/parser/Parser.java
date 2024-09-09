@@ -29,6 +29,20 @@ public class Parser {
                 stream.advance();
                 yield new PrintStatement(expr(stream));
             }
+            case VAR -> {
+                stream.advance();
+                var identifier = stream.get();
+                if(identifier.type() != IDENTIFIER) {
+                    throw new RuntimeException();
+                }
+                stream.advance();
+                var equals = stream.get();
+                if(equals.type() != EQUAL) {
+                    throw new RuntimeException();
+                }
+                stream.advance();
+                yield new VarStatement(identifier, expr(stream));
+            }
             default -> new ExpressionStatement(expr(stream));
         };
         token = stream.get();

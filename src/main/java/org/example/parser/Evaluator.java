@@ -12,5 +12,5 @@ public interface Evaluator<T> {
     T evaluate(Binary number);
     void execute(PrintStatement statement);
     void execute(ExpressionStatement statement);
-
+    void execute(VarStatement statement);
 }

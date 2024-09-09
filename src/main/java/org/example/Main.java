@@ -9,9 +9,10 @@ public class Main {
     public static void main(String[] args) {
         Lexer lexer = DefaultLexer.lexer();
         var tokens = lexer.run("""
+            var first = 10;
             print (2 + 4) * 10;
             print (2 + 4) * 10;
-            print first + 5 ;
+            print first + 5;
             """);
         Parser parser = new Parser();
         var program = parser.parseProgram(tokens);

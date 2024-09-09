@@ -6,6 +6,7 @@ public enum TokenType {
     MULTIPLY("*"),
     DIVIDE("/"),
     EQUAL_EQUAL("=="),
+    EQUAL("="),
     BANG_EQUAL("!="),
     GREATER_EQUAL(">="),
     LESS_EQUAL("<="),
@@ -25,6 +26,7 @@ public enum TokenType {
     NULL("nil"),
     PRINT("print"),
     END(";"),
+    VAR("var"),
     STRING("");
 
     private final String code;
