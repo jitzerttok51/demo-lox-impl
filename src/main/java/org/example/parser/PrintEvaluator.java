@@ -25,6 +25,11 @@ public class PrintEvaluator implements Evaluator<String> {
     }
 
     @Override
+    public String evaluate(Identifier expr) {
+        return "";
+    }
+
+    @Override
     public String evaluate(Unary number) {
         return "("+number.token().text() + " " + number.expr().eval(this)+ ")";
     }

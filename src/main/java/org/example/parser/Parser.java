@@ -135,6 +135,7 @@ public class Parser {
             case NUMBER -> new LiteralNumber(Double.parseDouble(token.text()), token);
             case TRUE -> new LiteralBoolean(true, token);
             case FALSE -> new LiteralBoolean(false, token);
+            case IDENTIFIER -> new Identifier(token);
             default -> throw new RuntimeException("Unrecognized token type: " + token.type());
         };
         stream.advance();

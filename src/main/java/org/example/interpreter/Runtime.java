@@ -4,6 +4,7 @@ import org.example.parser.Binary;
 import org.example.parser.Evaluator;
 import org.example.parser.Expr;
 import org.example.parser.ExpressionStatement;
+import org.example.parser.Identifier;
 import org.example.parser.LiteralBoolean;
 import org.example.parser.LiteralNumber;
 import org.example.parser.PrintStatement;
@@ -14,8 +15,13 @@ import org.example.runtime.LoxNumber;
 import org.example.runtime.LoxObject;
 
 import java.util.List;
+import java.util.Map;
 
 public class Runtime implements Evaluator<LoxObject> {
+
+    private Map<String, LoxObject> scope = Map.of(
+        "first", new LoxNumber(5)
+    );
 
     @Override
     public void run(List<Statement> statements) {
@@ -37,6 +43,15 @@ public class Runtime implements Evaluator<LoxObject> {
     @Override
     public LoxObject evaluate(LiteralBoolean number) {
         return new LoxBool(number.bool());
+    }
+
+    @Override
+    public LoxObject evaluate(Identifier expr) {
+        var result = scope.get(expr.token().text());
+        if (result == null) {
+            throw new RuntimeException();
+        }
+        return result;
     }
 
     @Override

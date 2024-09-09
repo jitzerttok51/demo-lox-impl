@@ -11,6 +11,7 @@ public class Main {
         var tokens = lexer.run("""
             print (2 + 4) * 10;
             print (2 + 4) * 10;
+            print first + 5 ;
             """);
         Parser parser = new Parser();
         var program = parser.parseProgram(tokens);
