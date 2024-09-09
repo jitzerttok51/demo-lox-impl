@@ -3,6 +3,7 @@ package org.example.parser;
 import org.example.lexer.Token;
 import static org.example.lexer.TokenType.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Parser {
@@ -10,6 +11,32 @@ public class Parser {
     public Expr parse(List<Token> tokens) {
         TokenStream stream = new TokenStream(tokens);
         return expr(stream);
+    }
+
+    public List<Statement> parseProgram(List<Token> tokens) {
+        TokenStream stream = new TokenStream(tokens);
+        List<Statement> result = new ArrayList<>();
+        while (!stream.isEnd()) {
+            result.add(statement(stream));
+        }
+        return List.copyOf(result);
+    }
+
+    private Statement statement(TokenStream stream) {
+        var token = stream.get();
+        var statement = switch (token.type()) {
+            case PRINT -> {
+                stream.advance();
+                yield new PrintStatement(expr(stream));
+            }
+            default -> new ExpressionStatement(expr(stream));
+        };
+        token = stream.get();
+        if(token.type() != END) {
+            throw new RuntimeException();
+        }
+        stream.advance();
+        return statement;
     }
 
     private Expr expr(TokenStream stream) {

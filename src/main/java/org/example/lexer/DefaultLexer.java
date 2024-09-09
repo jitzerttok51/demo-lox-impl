@@ -13,6 +13,7 @@ public class DefaultLexer {
             doubleTokenFunction(BANG_EQUAL),
             doubleTokenFunction(AND),
             doubleTokenFunction(OR),
+            singleTokenFunction(END),
             doubleTokenFunction(GREATER_EQUAL),
             doubleTokenFunction(LESS_EQUAL),
             singleTokenFunction(LESS_THAN),
@@ -119,6 +120,7 @@ public class DefaultLexer {
             case "true" -> TRUE;
             case "false" -> FALSE;
             case "nil" -> NULL;
+            case "print" -> PRINT;
             default -> TokenType.IDENTIFIER;
         };
         return Optional.of(new Token(type, value, position, line, column));

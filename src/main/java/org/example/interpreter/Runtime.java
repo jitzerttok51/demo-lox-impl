@@ -3,14 +3,26 @@ package org.example.interpreter;
 import org.example.parser.Binary;
 import org.example.parser.Evaluator;
 import org.example.parser.Expr;
+import org.example.parser.ExpressionStatement;
 import org.example.parser.LiteralBoolean;
 import org.example.parser.LiteralNumber;
+import org.example.parser.PrintStatement;
+import org.example.parser.Statement;
 import org.example.parser.Unary;
 import org.example.runtime.LoxBool;
 import org.example.runtime.LoxNumber;
 import org.example.runtime.LoxObject;
 
+import java.util.List;
+
 public class Runtime implements Evaluator<LoxObject> {
+
+    @Override
+    public void run(List<Statement> statements) {
+        for (Statement statement : statements) {
+            statement.execute(this);
+        }
+    }
 
     @Override
     public LoxObject evaluate(Expr expr) {
@@ -38,5 +50,16 @@ public class Runtime implements Evaluator<LoxObject> {
         var left = number.left().eval(this);
         var right = number.right().eval(this);
         return left.callBinary(number.token(), right);
+    }
+
+    @Override
+    public void execute(PrintStatement statement) {
+        var result = statement.expr().eval(this);
+        System.out.println(result);
+    }
+
+    @Override
+    public void execute(ExpressionStatement statement) {
+        statement.expr().eval(this);
     }
 }

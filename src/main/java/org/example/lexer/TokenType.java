@@ -23,6 +23,8 @@ public enum TokenType {
     TRUE("true"),
     FALSE("false"),
     NULL("nil"),
+    PRINT("print"),
+    END(";"),
     STRING("");
 
     private final String code;

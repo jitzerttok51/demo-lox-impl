@@ -1,6 +1,13 @@
 package org.example.parser;
 
+import java.util.List;
+
 public class PrintEvaluator implements Evaluator<String> {
+
+    @Override
+    public void run(List<Statement> statements) {
+
+    }
 
     @Override
     public String evaluate(Expr expr) {
@@ -25,5 +32,15 @@ public class PrintEvaluator implements Evaluator<String> {
     @Override
     public String evaluate(Binary number) {
         return "("+number.token().text() + " " +number.left().eval(this) + " " + number.right().eval(this)+ ")";
+    }
+
+    @Override
+    public void execute(PrintStatement statement) {
+
+    }
+
+    @Override
+    public void execute(ExpressionStatement statement) {
+
     }
 }
