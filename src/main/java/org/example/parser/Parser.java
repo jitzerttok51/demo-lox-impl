@@ -13,7 +13,29 @@ public class Parser {
     }
 
     private Expr expr(TokenStream stream) {
-        return equality(stream);
+        return orOperation(stream);
+    }
+
+    private Expr orOperation(TokenStream stream) {
+        var left = andOperation(stream);
+        if(stream.isEnd()) return left;
+        var token = stream.get();
+        if(token.type() != OR) {
+            return left;
+        }
+        stream.advance();
+        return new Binary(token, left, orOperation(stream));
+    }
+
+    private Expr andOperation(TokenStream stream) {
+        var left = equality(stream);
+        if(stream.isEnd()) return left;
+        var token = stream.get();
+        if(token.type() != AND) {
+            return left;
+        }
+        stream.advance();
+        return new Binary(token, left, andOperation(stream));
     }
 
     private Expr equality(TokenStream stream) {

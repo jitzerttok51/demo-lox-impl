@@ -17,6 +17,8 @@ public class LoxBool implements LoxObject {
             return switch (operation.type()) {
                 case EQUAL_EQUAL -> new LoxBool(value == loxBool.value);
                 case BANG_EQUAL -> new LoxBool(value != loxBool.value);
+                case AND -> new LoxBool(value && loxBool.value);
+                case OR -> new LoxBool(value || loxBool.value);
                 default -> throw new RuntimeException();
             };
         }

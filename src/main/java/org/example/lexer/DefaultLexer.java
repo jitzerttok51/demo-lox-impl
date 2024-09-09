@@ -11,6 +11,8 @@ public class DefaultLexer {
         return new Lexer(List.of(
             doubleTokenFunction(EQUAL_EQUAL),
             doubleTokenFunction(BANG_EQUAL),
+            doubleTokenFunction(AND),
+            doubleTokenFunction(OR),
             doubleTokenFunction(GREATER_EQUAL),
             doubleTokenFunction(LESS_EQUAL),
             singleTokenFunction(LESS_THAN),

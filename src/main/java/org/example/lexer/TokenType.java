@@ -12,6 +12,8 @@ public enum TokenType {
     LESS_THAN("<"),
     GREATER_THAN(">"),
     BANG("!"),
+    AND("&&"),
+    OR("||"),
     SINGLE_LINE_COMMENT("//"),
     MULTI_LINE_COMMENT("/*"),
     NUMBER(""),
