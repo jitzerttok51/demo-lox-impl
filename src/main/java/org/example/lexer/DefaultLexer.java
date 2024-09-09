@@ -14,6 +14,8 @@ public class DefaultLexer {
             doubleTokenFunction(AND),
             doubleTokenFunction(OR),
             singleTokenFunction(END),
+            singleTokenFunction(OPEN_BRACKET),
+            singleTokenFunction(CLOSE_BRACKET),
             doubleTokenFunction(GREATER_EQUAL),
             doubleTokenFunction(LESS_EQUAL),
             singleTokenFunction(LESS_THAN),

@@ -26,6 +26,8 @@ public enum TokenType {
     NULL("nil"),
     PRINT("print"),
     END(";"),
+    OPEN_BRACKET("{"),
+    CLOSE_BRACKET("}"),
     VAR("var"),
     STRING("");
 

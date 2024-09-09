@@ -13,13 +13,27 @@ public class Parser {
         return expr(stream);
     }
 
-    public List<Statement> parseProgram(List<Token> tokens) {
+    public Block parseProgram(List<Token> tokens) {
         TokenStream stream = new TokenStream(tokens);
         List<Statement> result = new ArrayList<>();
         while (!stream.isEnd()) {
+            result.add(block(stream));
+        }
+        return new Block(result);
+    }
+
+    private Statement block(TokenStream stream) {
+        var token = stream.get();
+        if(token.type() != OPEN_BRACKET) {
+            return statement(stream);
+        }
+        stream.advance();
+        List<Statement> result = new ArrayList<>();
+        while (stream.get().type() != CLOSE_BRACKET) {
             result.add(statement(stream));
         }
-        return List.copyOf(result);
+        stream.advance();
+        return new Block(result);
     }
 
     private Statement statement(TokenStream stream) {

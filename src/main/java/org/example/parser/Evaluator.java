@@ -13,4 +13,5 @@ public interface Evaluator<T> {
     void execute(PrintStatement statement);
     void execute(ExpressionStatement statement);
     void execute(VarStatement statement);
+    void execute(Block block);
 }

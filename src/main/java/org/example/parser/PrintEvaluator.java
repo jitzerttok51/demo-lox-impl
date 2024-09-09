@@ -53,4 +53,9 @@ public class PrintEvaluator implements Evaluator<String> {
     public void execute(VarStatement statement) {
 
     }
+
+    @Override
+    public void execute(Block block) {
+
+    }
 }

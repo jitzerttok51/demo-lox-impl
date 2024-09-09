@@ -1,6 +1,7 @@
 package org.example.interpreter;
 
 import org.example.parser.Binary;
+import org.example.parser.Block;
 import org.example.parser.Evaluator;
 import org.example.parser.Expr;
 import org.example.parser.ExpressionStatement;
@@ -22,6 +23,15 @@ import java.util.Map;
 public class Runtime implements Evaluator<LoxObject> {
 
     private final Map<String, LoxObject> scope = new HashMap<>();
+    private final Runtime parent;
+
+    public Runtime(Runtime parent) {
+        this.parent = parent;
+    }
+
+    public Runtime() {
+        this(null);
+    }
 
     @Override
     public void run(List<Statement> statements) {
@@ -47,11 +57,7 @@ public class Runtime implements Evaluator<LoxObject> {
 
     @Override
     public LoxObject evaluate(Identifier expr) {
-        var result = scope.get(expr.token().text());
-        if (result == null) {
-            throw new RuntimeException();
-        }
-        return result;
+        return get(expr.token().text());
     }
 
     @Override
@@ -84,5 +90,22 @@ public class Runtime implements Evaluator<LoxObject> {
             throw new RuntimeException("Cannot re-declare variable");
         }
         scope.put(statement.name(), statement.expr().eval(this));
+    }
+
+    @Override
+    public void execute(Block block) {
+        var runtime = new Runtime(this);
+        runtime.run(block.statements());
+    }
+
+    private LoxObject get(String name) {
+        var result = scope.get(name);
+        if (result != null) {
+            return result;
+        }
+        if (parent == null) {
+            throw new RuntimeException();
+        }
+        return parent.get(name);
     }
 }
